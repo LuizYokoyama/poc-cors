@@ -1,45 +1,27 @@
-
-## STARTER: com.c4-soft.springaddons
-origins: '*'
-issuer: 'http://localhost:8180/auth/realms/my'
-
-com:
-  c4-soft:
-    springaddons:
-      security:
-        cors:
-          - path: /**
-            allowed-origins: ${origins}
-        issuers:
-          - location: ${issuer}
-            username-claim: preferred_username
-            authorities:
-              - path: $.realm_access.roles
-                prefix: ROLE_
-              - path: $.resource_access.*.roles
-                prefix: ROLE_CLIENT_
-              - path: $.scope
-                prefix: SCOPE_
-
-        permit-all:
-          - "/actuator/health/readiness"
-          - "/actuator/health/liveness"
-          - "/v3/api-docs/**"
-          - "/swagger-ui/**"
-          - "/swagger-ui.html"
+server:
+  port: 3001
+  servlet:
+    context-path: /read
 
 ####### resource server configuration properties
 spring:
+  application:
+    name: read
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: 'http://localhost:8180/auth/realms/my'
-          jwk-set-uri: 'http://localhost:8180/auth/realms/my/protocol/openid-connect/certs'
+          jwk-set-uri: 'http://readservice:8180/auth/realms/my/protocol/openid-connect/certs'
 
 
+springdoc:
+  swagger-ui:
+    oauth:
+      clientId: myclient
+      clientSecret: JAt2LkGmYZcKKKTpQYfbOERhN7xnYpDw
 
-####### KEYCLOAK
+####### KEYCLOAK - SWAGGER
 keycloak:
   auth-server-url: 'http://localhost:8180/auth'
   realm: my   # tudo em minusculo

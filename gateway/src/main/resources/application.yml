@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+        - id: read-service
+          uri: http://localhost:3001
+          predicates:
+            - Path=/**
+          filters:
+            - RemoveRequestHeader=Cookie
+        - id: write-service
+          uri: http://localhost:3002
+          predicates:
+            - Path=/**
+          filters:
+            - RemoveRequestHeader=Cookie
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: 'http://localhost:8180/auth/realms/my'
+          jwk-set-uri: 'http://localhost:8180/auth/realms/my/protocol/openid-connect/certs'
+      client:
+        provider:
+          keycloak:
+            token-uri: http://localhost:8180/auth/realms/my/protocol/openid-connect/token
+            authorization-uri: http://localhost:8180/auth/realms/my/master/protocol/openid-connect/auth
+            userinfo-uri: http://localhost:8180/auth/realms/my/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+        registration:
+          myclient:
+            provider: keycloak
+            client-id: myclient
+            client-secret: JAt2LkGmYZcKKKTpQYfbOERhN7xnYpDw
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/oauth2/authorization/keycloak"
+
+####### KEYCLOAK - SWAGGER
+keycloak:
+  auth-server-url: 'http://localhost:8180/auth'
+  realm: my   # tudo em minusculo
