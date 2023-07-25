@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class WriteController {
 
     @PostMapping("/post")
-    public ResponseEntity<String> getUserDetailsById(@RequestBody String words){
+    public ResponseEntity<String> writeWords(@RequestBody String words){
         String returnObject ="Cadastrado: ";
 
         return new ResponseEntity<>(returnObject + words, HttpStatus.OK);

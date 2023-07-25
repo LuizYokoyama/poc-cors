@@ -1,5 +1,5 @@
 server:
-  port: 3001
+  port: 3003
   servlet:
     context-path: /read
 
@@ -11,8 +11,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: 'http://localhost:8180/auth/realms/my'
-          jwk-set-uri: 'http://readservice:8180/auth/realms/my/protocol/openid-connect/certs'
+          issuer-uri: 'http://localhost:8080/auth/realms/my'
+          jwk-set-uri: 'http://keycloak_oauth:8080/auth/realms/my/protocol/openid-connect/certs'
 
 
 springdoc:
@@ -23,5 +23,5 @@ springdoc:
 
 ####### KEYCLOAK - SWAGGER
 keycloak:
-  auth-server-url: 'http://localhost:8180/auth'
+  auth-server-url: 'http://localhost:8080/auth'
   realm: my   # tudo em minusculo

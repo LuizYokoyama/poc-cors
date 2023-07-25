@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReadController {
 
     @GetMapping("/get")
-    public ResponseEntity<String> getUserDetailsById(){
+    public ResponseEntity<String> readWords(){
         String returnObject ="{\"palavra1\",\" palavra2\",\" palavra3\" }";
 
         return new ResponseEntity<>("Palavras cadastradas: " + returnObject, HttpStatus.OK);

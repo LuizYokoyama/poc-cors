@@ -1,6 +1,26 @@
 version: "3.8"
 
 services:
+  keycloak:
+    image: jboss/keycloak
+    hostname: keycloak_oauth
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgresql
+      DB_DATABASE: demo_kc
+      DB_USER: admin
+      DB_SCHEMA: public
+      DB_PASSWORD: admin
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      #JDBC_PARAMS: "ssl=true"
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+    networks:
+      - microservices-network
+
   readservice:
     container_name: readservice
     image: readservice:latest
@@ -28,19 +48,6 @@ services:
     networks:
       - microservices-network
 
-  gatewayservice:
-    container_name: gatewayservice
-    image: gatewayservice:latest
-    environment:
-      SERVICE_NAME: gateway-service
-      SERVER_PORT: 8080
-    build:
-      dockerfile: Dockerfile
-      context: ./gateway
-    ports:
-      - "8080:8080"
-    networks:
-      - microservices-network
 
   postgresql:
     image: postgres:14.5
@@ -56,24 +63,6 @@ services:
     networks:
       - microservices-network
 
-  keycloak:
-    image: jboss/keycloak
-    environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: postgresql
-      DB_DATABASE: demo_kc
-      DB_USER: admin
-      DB_SCHEMA: public
-      DB_PASSWORD: admin
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin
-      #JDBC_PARAMS: "ssl=true"
-    ports:
-      - 8180:8080
-    depends_on:
-      - postgresql
-    networks:
-      - microservices-network
 
 
 networks:
