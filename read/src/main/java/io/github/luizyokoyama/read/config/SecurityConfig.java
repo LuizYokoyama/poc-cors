@@ -31,7 +31,7 @@ public class SecurityConfig {
                 );
         // Enable and configure CORS
         http.cors(cors -> cors.configurationSource(corsConfigurationSource("http://localhost:3001",
-                "http://localhost:5001")));
+                "http://localhost:5001", "http://localhost:5002")));
 
         // State-less session (state in access-token only)
         http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

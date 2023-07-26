@@ -35,8 +35,8 @@ public class SecurityConfig {
         // State-less session (state in access-token only)
         http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Disable CSRF because of state-less session-management
-        http.csrf(csrf -> csrf.disable());
+
+        http.csrf(Customizer.withDefaults());
 
         return http.build();
     }
