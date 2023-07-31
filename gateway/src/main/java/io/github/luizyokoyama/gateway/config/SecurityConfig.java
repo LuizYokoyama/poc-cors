@@ -21,7 +21,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges.anyExchange().permitAll());
-        http.cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource("http://domain1.com")));
+        http.cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource("*")));
         http.csrf(withDefaults());
 
         return http.build();
