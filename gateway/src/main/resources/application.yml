@@ -15,7 +15,7 @@ spring:
             - RemoveRequestHeader=Cookie
           metadata:
             cors:
-              allowedOrigins: 'http://localhost:3001'
+              allowedOrigins: '*'
               allowedMethods:
                 - GET
               allowedHeaders: '*'

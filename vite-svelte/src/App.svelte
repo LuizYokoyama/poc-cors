@@ -1,17 +1,25 @@
-<script lang="ts">
+ <script lang="ts">
 
   import Keycloak, { KeycloakInitOptions } from "keycloak-js";
 
 
   // Keycloak
   let instance = {
-    url: "http://127.0.0.1:8080",
-    realm: "my",
-    clientId: "svelte",
+    url: 'http://127.0.0.1:8080/',
+    realm: 'my',
+    clientId: 'svelte',
   };
 
   let keycloak = Keycloak(instance);
-  let initOptions: KeycloakInitOptions = { onLoad: "login-required" };
+
+  keycloak.init({ onLoad: 'login-required' }).success(function(authenticated) {
+    alert(authenticated ? 'authenticated' : 'not authenticated');
+  }).error(function() {
+    alert('failed to initialize');
+  });
+
+
+ /* let initOptions: KeycloakInitOptions = { onLoad: "login-required" };
   keycloak
           .init(initOptions)
           .then(function (authenticated) {
@@ -20,6 +28,7 @@
           .catch(function () {
             alert("failed to initialize");
           });
+*/
 
   //Call API
   let words;
