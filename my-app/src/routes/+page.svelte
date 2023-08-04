@@ -5,7 +5,7 @@
 
     let words;
 
-
+/*
     // Keycloak
     const keycloak = new Keycloak({
         url: 'http://localhost:8080',
@@ -13,7 +13,20 @@
         clientId: 'svelte'
     });
 
+/*/
 
+    var keycloak = Keycloak({
+        url: 'http://localhost:8080/auth',
+        realm: 'Internal_Projects',
+        clientId: 'payments'
+    });
+
+
+    keycloak.init({ onLoad: 'login-required' }).then(function(authenticated) {
+        alert(authenticated ? 'authenticated' : 'not authenticated');
+    }).catch(function() {
+        alert('failed to initialize');
+    });
 
 
 

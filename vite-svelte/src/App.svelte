@@ -5,7 +5,7 @@
 
   // Keycloak
   let instance = {
-    url: 'http://127.0.0.1:8080/',
+    url: 'http://127.0.0.1:8080/auth',
     realm: 'my',
     clientId: 'svelte',
   };
@@ -27,7 +27,7 @@
 
   function logout() {
     //
-    keycloak.logout('http://auth-server/auth/realms/Internal_Projects/protocol/openid-connect/logout?redirect_uri=encodedRedirectUri')
+    keycloak.logout('http://auth-server/auth/realms/svelte/protocol/openid-connect/logout?redirect_uri=encodedRedirectUri')
     //alert("Logged Out");
   }
 
