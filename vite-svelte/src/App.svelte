@@ -11,13 +11,25 @@
   };
 
   let keycloak = Keycloak(instance);
-
+/*
   keycloak.init({ onLoad: 'login-required' }).success(function(authenticated) {
     alert(authenticated ? 'authenticated' : 'not authenticated');
   }).error(function() {
     alert('failed to initialize');
   });
+  */
 
+  keycloak.init({ onLoad: 'login-required' }).then(function(authenticated) {
+    alert(authenticated ? 'authenticated' : 'not authenticated');
+  }).catch(function() {
+    alert('failed to initialize');
+  });
+
+  function logout() {
+    //
+    keycloak.logout('http://auth-server/auth/realms/Internal_Projects/protocol/openid-connect/logout?redirect_uri=encodedRedirectUri')
+    //alert("Logged Out");
+  }
 
  /* let initOptions: KeycloakInitOptions = { onLoad: "login-required" };
   keycloak
