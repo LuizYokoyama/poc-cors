@@ -44,7 +44,7 @@
 
   }
 
-  export function active() {
+  async function active() {
       return fetch("http://localhost:3001/read/get", {
           method: "GET",
           headers: {
@@ -53,14 +53,12 @@
           },
       })
           .then(response => {
-              alert(response.status);
               words = response.text();
               if (!response.ok) {
-                  alert(response.status);
                   throw new Error("HTTP status " + response.status);
               }
               alert(response.text())
-              return response.text(); // or `.json()` or several others, see #4 above
+              return response.text(); // or `.json()`
           });
   }
 
