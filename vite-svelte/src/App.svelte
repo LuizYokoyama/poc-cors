@@ -24,42 +24,22 @@
 
   //Call API
   let words;
-  let endPointURL = "http://localhost:3001/read/get";
+  let endPointURL = "http://localhost:5001/read/get";
   async function getWords() {
     const response = await fetch(endPointURL, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${kc.token}`,
+          'accept': '*/*',
+       // "Content-Type": "application/json",
+        'Authorization': `Bearer ${kc.token}`,
       },
     });
-      alert("sdfaw");
-
     if (!response.ok) {
       console.log(response);
     }
     let w = await response.text();
-    alert("w");
     return w;
 
-  }
-
-  async function active() {
-      return fetch("http://localhost:3001/read/get", {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${kc.token}`,
-          },
-      })
-          .then(response => {
-              words = response.text();
-              if (!response.ok) {
-                  throw new Error("HTTP status " + response.status);
-              }
-              alert(response.text())
-              return response.text(); // or `.json()`
-          });
   }
 
   const wordsList = async () => {
@@ -81,8 +61,8 @@
 
   <button >teste</button>
 
-    <button on:click={active()}>
-        Clicks: {words}
+    <button on:click={wordsList}>
+        Click
     </button>
 
     {#if words !== undefined}
