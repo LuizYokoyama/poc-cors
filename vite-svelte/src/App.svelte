@@ -12,13 +12,7 @@
 
   let kc = new Keycloak(instance);
 
-/*
-  keycloak.init({ onLoad: 'login-required' }).success(function(authenticated) {
-    alert(authenticated ? 'authenticated' : 'not authenticated');
-  }).error(function() {
-    alert('failed to initialize');
-  });
-  */
+
 
   kc.init({ onLoad: 'login-required' }).then(function(authenticated) {
     alert(authenticated ? 'authenticated' : 'not authenticated');
@@ -26,29 +20,11 @@
     alert('failed to initialize');
   });
 
-  /*
-  function logout() {
-    //
-    kc.logout('http://auth-server/auth/realms/svelte/protocol/openid-connect/logout?redirect_uri=encodedRedirectUri')
-    //alert("Logged Out");
-  }
-  */
 
-/*
-  let initOptions: KeycloakInitOptions = { onLoad: "login-required" };
-  kc
-          .init(initOptions)
-          .then(function (authenticated) {
-            console.info("Authenticated");
-          })
-          .catch(function () {
-            alert("failed to initialize");
-          });
-*/
 
   //Call API
   let words;
-  let endPointURL = "http://localhost:5001/read/get";
+  let endPointURL = "http://localhost:3001/read/get";
   async function getWords() {
     const response = await fetch(endPointURL, {
       method: "GET",
@@ -57,13 +33,44 @@
         Authorization: `Bearer ${kc.token}`,
       },
     });
+      alert("sdfaw");
+
     if (!response.ok) {
       console.log(response);
     }
-    words = await response.json();
+    let w = await response.text();
+    alert("w");
+    return w;
 
   }
 
+  export function active() {
+      return fetch("http://localhost:3001/read/get", {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${kc.token}`,
+          },
+      })
+          .then(response => {
+              alert(response.status);
+              if (!response.ok) {
+                  alert(response.status);
+                  throw new Error("HTTP status " + response.status);
+              }
+              alert(response.text())
+              return response.text(); // or `.json()` or several others, see #4 above
+          });
+  }
+
+  const wordsList = async () => {
+      //update token
+      kc?.updateToken(50).then(async function () {
+          let wordsResp = await getWords();
+          alert(wordsResp);
+          words = wordsResp;
+      });
+  };
 
 </script>
 
@@ -75,10 +82,13 @@
 
   <button >teste</button>
 
-    <button on:click={getWords()}>
+    <button on:click={active()}>
         Clicks: {words}
     </button>
 
+    {#if words !== undefined}
+        <p>You rolled a {words}</p>
+    {/if}
 
 </main>
 
