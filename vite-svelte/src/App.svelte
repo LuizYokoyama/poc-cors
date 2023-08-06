@@ -54,6 +54,7 @@
       })
           .then(response => {
               alert(response.status);
+              words = response.text();
               if (!response.ok) {
                   alert(response.status);
                   throw new Error("HTTP status " + response.status);
@@ -87,7 +88,7 @@
     </button>
 
     {#if words !== undefined}
-        <p>You rolled a {words}</p>
+        <p>Your words: {words}</p>
     {/if}
 
 </main>
