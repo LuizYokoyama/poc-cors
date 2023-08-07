@@ -29,8 +29,7 @@
     const response = await fetch(endPointURL, {
       method: "GET",
       headers: {
-          'accept': 'application/json',
-        "Content-Type": "application/json",
+
         'Authorization': `Bearer ${kc.token}`,
       },
     });
