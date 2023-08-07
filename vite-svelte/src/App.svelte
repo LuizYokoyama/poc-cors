@@ -29,8 +29,8 @@
     const response = await fetch(endPointURL, {
       method: "GET",
       headers: {
-
-        'Authorization': `Bearer ${kc.token}`,
+          'accept': '*/*',
+          'Authorization' : `Bearer ${kc.token}`,
       },
     });
     if (!response.ok) {
