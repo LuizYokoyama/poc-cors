@@ -93,9 +93,12 @@ e **write**.
 
 http://localhost:5173/
 
-## Explicações
+## Explicações sobre o ***CORS***
 
 * No ***CORS***, a porta ***5001*** foi liberada para permitir que se possa acessar o swagger pelo ***gateway***.
 * No *application.yml* do *Gateway*, o ***cors*** tem **precedência** sobre o ***cors*** do *httpSecurity*, e funciona mesmo desabilitando o ***CORS*** lá no *httpSecurity*.
 * Tanto os cors do gateway, quanto dos seviços devem estar habilitados e configurados para se evitar que o navegador bloqueie o javascript de acessá-los.
 * É preciso se adicionar o *filter* no *application.yml* do ***gateway***: ***DedupeResponseHeader=Access-Control-Allow-Origin*** para remover o ***header duplicado*** *(um gerado pelo gateway e outro pelo serviço)*, porque os navegadores tambem bloqueiam se tiver mais de um ***Origin*** e também bloqueiam se não tiver.
+* Sem o ***cors*** **configurado**, o navegador também **bloqueia por padrão** o ***header 'Content-Type': 'application/json'*** e o *preflight request* com o *httpMethod Options*:
+
+![img_9.png](img_9.png)
