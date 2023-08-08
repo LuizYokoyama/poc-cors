@@ -60,18 +60,22 @@ ou cola-lo no arquivo 'application.yml' dos serviços 'read' e 'write' e refazer
 
 Cada serviço tem sua própria configuração de ***cors*** e funcionam em conjunto:
 
-Gateway:
+* *FilterChain* do Gateway:
 ![img_8.png](img_8.png)
 
-Writeservice:
+* *Application.yml* do Gateway:
+
+![img_10.png](img_10.png)
+
+* Writeservice:
 
 ![img_4.png](img_4.png)
 
-ReadService:
+* ReadService:
 
 ![img_5.png](img_5.png)
 
-Keycloack:
+* Keycloack:
 
 ![img_6.png](img_6.png)
 
