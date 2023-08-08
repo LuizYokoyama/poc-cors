@@ -30,6 +30,7 @@
       method: "GET",
       headers: {
           'accept': '*/*',
+          'Content-Type': 'application/json',
           'Authorization' : `Bearer ${kc.token}`,
       },
     });
@@ -46,9 +47,13 @@
       kc?.updateToken(50).then(async function () {
           let wordsResp = await getWords();
           alert(wordsResp);
-          words = wordsResp;
+          words = wordsResp + ' ';
       });
   };
+
+ async function clear(){
+      words = '';
+  }
 
 </script>
 
@@ -56,17 +61,57 @@
 
   <h1>Vite + Svelte</h1>
 
-  <p>Palavras kasjfdlajsldfjlal</p>
+  <p>Palavras cadastradas</p>
 
-  <button >teste</button>
+  <button on:click={clear}>
+      limpa
+  </button>
 
     <button on:click={wordsList}>
-        Click
+        Click to GET
     </button>
 
     {#if words !== undefined}
-        <p>Your words: {words}</p>
+        <p>{words}</p>
     {/if}
+
+    <br>
+    <label>
+        Adicionar palavras:
+        <input
+                type="text"
+                autocomplete="off"
+                on:keydown={async (e) => {
+				if (e.key === 'Enter') {
+					const input = e.currentTarget;
+					const word = input.value;
+//update token
+                    kc?.updateToken(50).then(async function () {
+                        const response = await fetch('http://localhost:5001/write/post', {
+                            method: 'POST',
+                            body: word,
+                            headers: {
+                                'accept': '*/*',
+                                'Authorization' : `Bearer ${kc.token}`,
+                            }
+                        });
+
+                        let resp = await response.text();
+
+                        alert(resp);
+                        if (words !== undefined){
+                            words += resp + ' ';
+                        } else {
+                            words = resp + ' ';
+                        }
+                        input.value = '';
+                    });
+				}
+			}}
+
+        />
+    </label>
+
 
 </main>
 
@@ -82,11 +127,6 @@
      text-align: center;
      padding: 1em;
      margin: 0 auto;
-   }
-
-   img {
-     height: 3rem;
-     width: 3rem;
    }
 
    h1 {
