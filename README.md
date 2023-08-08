@@ -61,7 +61,7 @@ ou cola-lo no arquivo 'application.yml' dos serviços 'read' e 'write' e refazer
 Cada serviço tem sua própria configuração de ***cors*** e funcionam em conjunto:
 
 Gateway:
-![img_3.png](img_3.png)
+![img_8.png](img_8.png)
 
 Writeservice:
 
@@ -77,3 +77,25 @@ Keycloack:
 
 Neste caso, foram liberados todos os acessos no ***gateway*** e no ***Keycloack*** e restringido o ***"cors"*** somente nos serviços **read** 
 e **write**.
+
+
+## Usando o svelte
+
+* Crie no Keycloak um cliente "svelte" com acesso público:
+
+![img_7.png](img_7.png)
+
+* No diretório ***vite-svelte*** execute: 
+
+***npm run dev***
+
+* Abra o navegador para testar a aplicação (o gateway e o docker-compose devem estar rodando também):
+
+http://localhost:5173/
+
+## Explicações
+
+* No ***CORS***, a porta ***5001*** foi liberada para permitir que se possa acessar o swagger pelo ***gateway***.
+* No *application.yml* do *Gateway*, o ***cors*** tem **precedência** sobre o ***cors*** do *httpSecurity*, e funciona mesmo desabilitando o ***CORS*** lá no *httpSecurity*.
+* Tanto os cors do gateway, quanto dos seviços devem estar habilitados e configurados para se evitar que o navegador bloqueie o javascript de acessá-los.
+* É preciso se adicionar o *filter* no *application.yml* do ***gateway***: ***DedupeResponseHeader=Access-Control-Allow-Origin*** para remover o ***header duplicado*** *(um gerado pelo gateway e outro pelo serviço)*, porque os navegadores tambem bloqueiam se tiver mais de um ***Origin*** e também bloqueiam se não tiver.

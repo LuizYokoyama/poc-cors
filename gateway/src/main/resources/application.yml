@@ -27,5 +27,5 @@ spring:
             - Path=/write/**
           filters:
             - RemoveRequestHeader=Cookie
-            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+            - DedupeResponseHeader=Access-Control-Allow-Origin
 
