@@ -1,4 +1,4 @@
- <script lang="ts">
+<script lang="js">
 
   import Keycloak from "keycloak-js";
 
@@ -46,13 +46,47 @@
       //update token
       kc?.updateToken(50).then(async function () {
           let wordsResp = await getWords();
-          alert(wordsResp);
+          //alert(wordsResp);
           words = wordsResp + ' ';
       });
   };
 
  async function clear(){
       words = '';
+  }
+  // const csrfToken = document.getElementsByTagName('meta')["_csrf"].content;
+  // const csrfHeader = document.getElementsByTagName('meta')["_csrf_header"].content;
+
+
+  var csrfParameter = window.$("meta[name='_csrf_parameter']").attr("content");
+  var csrfHeader = window.$("meta[name='_csrf_header']").attr("content");
+  var csrfToken = window.$("meta[name='_csrf']").attr("content");
+
+
+  // // using JQuery to send a non-x-www-form-urlencoded request
+  // var headers = {};
+  // headers[csrfHeader] = csrfToken;
+  // $.ajax({
+  //     url: "http://loca[:5001/write/post",
+  //     type: "POST",
+  //     headers: headers,
+  //     ...
+  // });
+  //
+
+  function getCookie(name) {
+      if (!document.cookie) {
+          return null;
+      }
+
+      const xsrfCookies = document.cookie.split(';')
+          .map(c => c.trim())
+          .filter(c => c.startsWith(name + '='));
+
+      if (xsrfCookies.length === 0) {
+          return null;
+      }
+      return decodeURIComponent(xsrfCookies[0].split('=')[1]);
   }
 
 </script>
@@ -85,20 +119,27 @@
 				if (e.key === 'Enter') {
 					const input = e.currentTarget;
 					const word = input.value;
-//update token
+
+ //update token
                     kc?.updateToken(50).then(async function () {
+                        const csrfToken = getCookie('XSRF-TOKEN');
+
                         const response = await fetch('http://localhost:5001/write/post', {
                             method: 'POST',
                             body: word,
+                            credentials: "include",
                             headers: {
                                 'accept': '*/*',
+                                'Content-Type': 'application/json',
                                 'Authorization' : `Bearer ${kc.token}`,
+                                'X-XSRF-TOKEN': csrfToken,
+
                             }
                         });
 
                         let resp = await response.text();
 
-                        alert(resp);
+                       // alert(resp);
                         if (words !== undefined){
                             words += resp + ' ';
                         } else {

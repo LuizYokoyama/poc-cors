@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -26,20 +27,25 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        .anyRequest().authenticated()
+                        //.anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
                 );
         // Enable and configure CORS
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource("http://localhost:3002",
-                "http://localhost:5001", "http://localhost:5173")));
-        //http.cors(cors -> cors.disable());
+//        http.cors(cors -> cors.configurationSource(corsConfigurationSource("http://localhost:3002",
+//                "http://localhost:5001", "http://localhost:5173")));
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource("*")));
+       // http.cors(cors -> cors.disable());
         // State-less session (state in access-token only)
-        http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+       // http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-
-        http.csrf(Customizer.withDefaults());
+        http.csrf(csrf -> csrf.disable());
+        //http.csrf(Customizer.withDefaults());
+//        http.csrf((csrf) -> csrf
+//                .csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler())
+//        );
 
         return http.build();
     }

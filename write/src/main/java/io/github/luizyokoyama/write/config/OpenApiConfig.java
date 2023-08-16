@@ -1,6 +1,7 @@
 package io.github.luizyokoyama.write.config;
 
 import io.swagger.v3.oas.models.security.*;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
@@ -24,6 +27,9 @@ public class OpenApiConfig {
         return new OpenAPI().components(new Components()
                         .addSecuritySchemes(OAUTH_SCHEME_NAME, createOAuthScheme()))
                 .addSecurityItem(new SecurityRequirement().addList(OAUTH_SCHEME_NAME))
+                .servers(List.of(
+                        new Server().description("Chamando swagger via gateway").url("http://localhost:5001/write")
+                        ))
                 .info(new Info().title("My title")
                         .description("A service providing info of my app.")
                         .version("1.10"));

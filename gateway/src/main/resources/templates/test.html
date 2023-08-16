@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>CSRF Protected JavaScript Page</title>
+  <meta name="description" content="This is the description for this page" />
+  <sec:csrfMetaTags />
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript">
+
+    var csrfParameter = $("meta[name='_csrf_parameter']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+
+    // using XMLHttpRequest directly to send an x-www-form-urlencoded request
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "http://localhost:3002/write/post", true);
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded data");
+    ajax.send(csrfParameter + "=" + csrfToken + "&name=John&...");
+
+    // using XMLHttpRequest directly to send a non-x-www-form-urlencoded request
+    var ajax = new XMLHttpRequest();
+    ajax.open("POST", "http://localhost:3002/write/post", true);
+    ajax.setRequestHeader(csrfHeader, csrfToken);
+    ajax.send("...");
+
+    // using JQuery to send an x-www-form-urlencoded request
+    var data = {};
+    data[csrfParameter] = csrfToken;
+    data["name"] = `John`;
+    ...
+    $.ajax({
+      url: "http://localhost:3002/write/post",
+      type: "POST",
+      data: data,
+      ...
+    });
+
+    // using JQuery to send a non-x-www-form-urlencoded request
+    var headers = {};
+    headers[csrfHeader] = csrfToken;
+    $.ajax({
+      url: "http://localhost:3002/write/post",
+      type: "POST",
+      headers: headers,
+      ...
+    });
+
+    </script>
+
+</head>
+<body>
+<p>HomePage</p>
+
+<!--<h1>Olá <span th:name="${_csrf.parameterName}" th:value="${_csrf.token}" ></span></h1>-->
+<div>
+
+  <form method="post" action="http://localhost:5001/write/post">
+    <p>Register your TEST: </p>
+    <input type="text" name="newWord" />
+    <!-- Comment to simulate CSRF -->
+<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+    <input type="hidden" name="CSRF-TOKEN" value="7c8ecee8-e416-4892-9786-034ecedc0ca0" />
+    <button type="submit">Register</button>
+  </form>
+</div>
+</body>
+</html>

@@ -2,6 +2,18 @@
 <html lang="pt">
   <head>
     <meta charset="UTF-8" />
+<!--    <meta name="_csrf" content="4bfd1575-3ad1-4d21-96c7-4ef2d9f86721"/>-->
+<!--    <meta name="_csrf_header" content="X-CSRF-TOKEN"/>-->
+
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <!-- ... -->
+
+    <meta name="description" content="This is the description for this page" />
+    <sec:csrfMetaTags />
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Svelte + TS</title>
