@@ -43,7 +43,6 @@ public class SecurityConfig {
        // http.csrf(Customizer.withDefaults());
         http.csrf((csrf) -> csrf
                 .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
-                //.csrfTokenRequestHandler(new XorServerCsrfTokenRequestAttributeHandler())
                 .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler())
         );
 
