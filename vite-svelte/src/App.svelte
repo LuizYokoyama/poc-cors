@@ -78,7 +78,6 @@
       if (!document.cookie) {
           return null;
       }
-
       const xsrfCookies = document.cookie.split(';')
           .map(c => c.trim())
           .filter(c => c.startsWith(name + '='));
@@ -133,7 +132,6 @@
                                 'Content-Type': 'application/json',
                                 'Authorization' : `Bearer ${kc.token}`,
                                 'X-XSRF-TOKEN': csrfToken,
-
                             }
                         });
 

@@ -37,10 +37,9 @@ public class SecurityConfig {
         //http.cors(cors -> cors.disable());
 
         //http.csrf(crsf -> crsf.disable());
-//        http.csrf(csrf -> csrf
-//                .csrfTokenRepository(new CookieServerCsrfTokenRepository())
-//                );
+
        // http.csrf(Customizer.withDefaults());
+
         http.csrf((csrf) -> csrf
                 .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new ServerCsrfTokenRequestAttributeHandler())
@@ -48,9 +47,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
-
 
 
     public CorsConfigurationSource corsConfigurationSource(String... origins) {

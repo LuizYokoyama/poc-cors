@@ -1,6 +1,37 @@
+### Explicações sobre o CSRF
 
+* O ***gateway*** foi configurado com a seguinte configuração no arquivo *SecurityConfig.java*:
 
-### Instruções gerais de execução:
+![img_11.png](img_11.png)
+
+* Com essa configuração do ***csrf***, é necessário enviar os *cookies* da sessão e o token csrf
+em todas as requisições HTTP que modificam o estado dos dados do *backend* (PATCH, POST, PUT e DELETE):
+
+![img_12.png](img_12.png)
+
+* É necessário configurar o ***cors*** do *gateway*, no arquivo *SecurityConfig.java*, para permitir o envio dos *cookies* da sessão:
+
+![img_13.png](img_13.png)
+
+* Para incluir estes *cookies* na requisição, pode-se usar o jQuery.ajax ou 
+se usar ***fetch***, deve-se incluir o parâmetro ***credentials: 'include'***.
+* Também é necessário enviar o ***token csrf*** no *header* das requisições:
+
+![img_14.png](img_14.png)
+
+* Para usar o ***Swagger***, basta a seguinte configuração no arquivo *application.yml* do serviço que possui o método **POST**:
+
+![img_15.png](img_15.png)
+
+Funcionamento do ***Swagger***:
+
+![img_18.png](img_18.png)
+
+Funcionamento do ***frontend Svelte***:
+
+![img_17.png](img_17.png)
+
+## Instruções gerais de execução:
 
 * Entre em cada subdiretorio: 'read' e 'write' executando o seguinte comando dentro de cada um:
 
