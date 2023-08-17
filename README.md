@@ -9,12 +9,12 @@ em todas as requisições HTTP que modificam o estado dos dados do *backend* (PA
 
 ![img_12.png](img_12.png)
 
-* É necessário configurar o ***cors*** do *gateway*, no arquivo *SecurityConfig.java*, para permitir o envio dos *cookies* da sessão:
+* É necessário configurar o ***cors*** do *gateway*, no arquivo *SecurityConfig.java*, para permitir que receba requisições com os *cookies* da sessão - ***credentials***:
 
 ![img_13.png](img_13.png)
 
-* Para incluir estes *cookies* na requisição, pode-se usar o jQuery.ajax ou 
-se usar ***fetch***, deve-se incluir o parâmetro ***credentials: 'include'***.
+* Para incluir estes *cookies* na requisição, pode-se usar o ***jQuery.ajax*** ou 
+ usar a *api* ***fetch***. O ***jQuery.ajax*** já inclui os *cookies* por padrão, mas no caso de usar o ***fetch*** deve-se incluir o parâmetro - ***credentials: 'include'***.
 * Também é necessário enviar o ***token csrf*** no *header* das requisições:
 
 ![img_14.png](img_14.png)
